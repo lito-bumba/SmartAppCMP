@@ -25,8 +25,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import smartleaderapp.composeapp.generated.resources.Res
-import smartleaderapp.composeapp.generated.resources.compose_multiplatform
+import smartapp.composeapp.generated.resources.Res
+import smartapp.composeapp.generated.resources.compose_multiplatform
 import views.WebViewScreen
 import views.components.native.WebViewWrapper
 

@@ -1,4 +1,4 @@
-rootProject.name = "SmartleaderApp"
+rootProject.name = "SmartApp"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

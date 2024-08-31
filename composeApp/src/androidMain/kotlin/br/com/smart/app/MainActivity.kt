@@ -1,4 +1,4 @@
-package br.com.smartleader.app
+package br.com.smart.app
 
 import App
 import android.os.Bundle

@@ -77,9 +77,8 @@ fun App(
                 WebViewScreen(
                     webViewKit = {
                         webViewWrapper.WebViewKit(
-                            url = "https://www.google.com",
+                            url = "https://touchlab.co",
                             modifier = Modifier.fillMaxSize()
-                                .border(2.dp, Color.Red)
                         )
                     },
                     onBack = { navController.popBackStack() }

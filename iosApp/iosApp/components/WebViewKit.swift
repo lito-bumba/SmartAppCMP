@@ -9,25 +9,24 @@
 import SwiftUI
 import WebKit
 
-struct WebView: View {
+struct WebViewKit: View {
+    let url: String
+    
     var body: some View {
-        WebViewKit()
-            .background(.green)
+        IOSWebView(url: self.url)
     }
 }
 
-func webViewFactory() -> UIViewController {
-    let webView = WebView()
-    return UIHostingController(rootView: webView)
-}
-
-struct WebViewKit: UIViewRepresentable {
+struct IOSWebView: UIViewRepresentable {
     
-    let webView: WKWebView
+    private let webView: WKWebView
+    private let urlStr: String
     
-    init() {
+    
+    init(url: String) {
         self.webView = WKWebView()
-        loadURL()
+        self.urlStr = url
+        self.loadURL()
     }
     
     func makeUIView(context: Context) -> WKWebView {
@@ -35,16 +34,14 @@ struct WebViewKit: UIViewRepresentable {
         return webView
     }
     
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        
-    }
+    func updateUIView(_ uiView: WKWebView, context: Context) {}
     
     func loadURL() {
-        webView.load(URLRequest(url: URL(string: "https://www.google.com")!))
+        webView.load(URLRequest(url: URL(string: urlStr)!))
     }
 }
 
 
 #Preview {
-    WebView()
+    WebViewKit(url: "https://www.google.com")
 }

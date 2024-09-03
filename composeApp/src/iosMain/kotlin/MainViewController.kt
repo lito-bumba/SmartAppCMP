@@ -1,5 +1,6 @@
 import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
+import views.App
 import views.components.native.WebViewWrapperImpl
 
 fun MainViewController(

@@ -5,4 +5,8 @@ import androidx.compose.ui.Modifier
 
 @Composable
 actual fun WebView(url: String, modifier: Modifier) {
+    WebViewKit(
+        url = url,
+        modifier = modifier
+    )
 }

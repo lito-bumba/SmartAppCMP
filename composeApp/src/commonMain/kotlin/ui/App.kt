@@ -1,4 +1,4 @@
-package views
+package ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -8,14 +8,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import views.components.native.WebViewWrapper
-import views.main_screen.MainScreen
+import ui.main_screen.MainScreen
 
 @Composable
 @Preview
-fun App(
-    webViewWrapper: WebViewWrapper
-) {
+fun App() {
     MaterialTheme {
         val navController = rememberNavController()
 
@@ -29,12 +26,7 @@ fun App(
             }
             composable(route = AppScreen.WebView.name) {
                 WebViewScreen(
-                    webViewKit = {
-                        webViewWrapper.WebViewKit(
-                            url = "https://touchlab.co",
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    },
+                    url = "https://touchlab.co",
                     onBack = { navController.popBackStack() }
                 )
             }

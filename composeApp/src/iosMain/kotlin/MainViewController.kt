@@ -1,11 +1,16 @@
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.window.ComposeUIViewController
-import platform.UIKit.UIViewController
-import views.App
-import views.components.native.WebViewWrapperImpl
+import ui.App
+
+val LocalNativeViewFactory = staticCompositionLocalOf<NativeViewFactory> {
+    error("LocalNativeViewFactory not provided")
+}
 
 fun MainViewController(
-    webViewFactory: (url: String) -> UIViewController
+    nativeViewFactory: NativeViewFactory
 ) = ComposeUIViewController {
-    val webViewWrapper = WebViewWrapperImpl(webViewFactory)
-    App(webViewWrapper = webViewWrapper)
+    CompositionLocalProvider(LocalNativeViewFactory provides nativeViewFactory) {
+        App()
+    }
 }

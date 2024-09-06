@@ -15,16 +15,9 @@ struct ComposeView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
         MainViewControllerKt.MainViewController(
-            webViewFactory: { url in
-                webViewFactory(url: url)
-            }
+            nativeViewFactory: iOSNativeViewFactory.shared
         )
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-    
-    private func webViewFactory(url: String) -> UIViewController {
-        let webViewKit = WebViewKit(url: url)
-        return UIHostingController(rootView: webViewKit)
-    }
 }

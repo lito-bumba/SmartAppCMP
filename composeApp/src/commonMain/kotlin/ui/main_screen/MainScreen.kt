@@ -1,4 +1,4 @@
-package views.main_screen
+package ui.main_screen
 
 import Greeting
 import androidx.compose.animation.AnimatedVisibility
@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import smartapp.composeapp.generated.resources.Res
 import smartapp.composeapp.generated.resources.compose_multiplatform
-import views.AppScreen
+import ui.AppScreen
 
 @Composable
 fun MainScreen(

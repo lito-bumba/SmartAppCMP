@@ -1,4 +1,4 @@
-package views.components.native
+package ui.components.native
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

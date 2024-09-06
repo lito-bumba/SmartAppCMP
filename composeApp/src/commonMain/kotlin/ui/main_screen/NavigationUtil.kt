@@ -1,4 +1,4 @@
-package views.main_screen
+package ui.main_screen
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AppsOutage

@@ -3,6 +3,7 @@ package ui.main_screen
 import Greeting
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -42,20 +43,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import smartapp.composeapp.generated.resources.Res
 import smartapp.composeapp.generated.resources.compose_multiplatform
 import ui.AppScreen
+import ui.components.native.WebView
 
 @Composable
 fun MainScreen(
     navController: NavController
 ) {
     val scope = rememberCoroutineScope()
-    val navDrawerItems = NavigationUtil.entries.toTypedArray()
+    val drawerNavController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    var selectedItem by remember { mutableStateOf<NavigationUtil?>(null) }
+    var selectedItem: NavigationUtil by remember { mutableStateOf(NavigationUtil.HOME) }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -76,10 +81,11 @@ fun MainScreen(
                         modifier = Modifier.padding(16.dp)
                     )
                     HorizontalDivider(
-                        thickness = 4.dp,
+                        thickness = 3.dp,
                         color = Color.Blue
                     )
-                    navDrawerItems.forEach { navItem ->
+
+                    NavigationUtil.entries.toTypedArray().forEach { navItem ->
                         NavigationDrawerItem(
                             icon = {
                                 Image(
@@ -98,6 +104,7 @@ fun MainScreen(
                             onClick = {
                                 selectedItem = navItem
                                 scope.launch { drawerState.close() }
+                                drawerNavController.navigate(navItem.route)
                             }
                         )
                     }
@@ -116,44 +123,76 @@ fun MainScreen(
                 }
             }
         ) {
-            Column(
+            Box(
                 modifier = Modifier
+                    .fillMaxSize()
                     .padding(it)
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                var showContent by remember { mutableStateOf(false) }
+                NavHost(
+                    navController = drawerNavController,
+                    startDestination = NavigationUtil.HOME.route
+                ) {
+                    composable(route = NavigationUtil.HOME.route) {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            var showContent by remember { mutableStateOf(false) }
 
-                Spacer(Modifier.height(16.dp))
-                Button(onClick = {
-                    navController.navigate(AppScreen.WebView.name)
-                }) {
-                    Text("WebView Screen")
-                }
-                Spacer(Modifier.height(16.dp))
-                Button(onClick = { showContent = !showContent }) {
-                    Text("Click me!")
-                }
-                IconButton(onClick = {
-                    scope.launch {
-                        drawerState.apply {
-                            if (isClosed) open() else close()
+                            Spacer(Modifier.height(16.dp))
+                            Button(onClick = {
+                                navController.navigate(AppScreen.WebView.name)
+                            }) {
+                                Text("WebView Screen")
+                            }
+                            Spacer(Modifier.height(16.dp))
+                            Button(onClick = { showContent = !showContent }) {
+                                Text("Click me!")
+                            }
+                            IconButton(onClick = {
+                                scope.launch {
+                                    drawerState.apply {
+                                        if (isClosed) open() else close()
+                                    }
+                                }
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.BrokenImage,
+                                    contentDescription = null
+                                )
+                            }
+                            AnimatedVisibility(showContent) {
+                                val greeting = remember { Greeting().greet() }
+                                Column(
+                                    Modifier.fillMaxWidth(),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Image(painterResource(Res.drawable.compose_multiplatform), null)
+                                    Text("Compose: $greeting")
+                                }
+                            }
                         }
                     }
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.BrokenImage,
-                        contentDescription = null
-                    )
-                }
-                AnimatedVisibility(showContent) {
-                    val greeting = remember { Greeting().greet() }
-                    Column(
-                        Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Image(painterResource(Res.drawable.compose_multiplatform), null)
-                        Text("Compose: $greeting")
+
+                    composable(NavigationUtil.GOOGLE.route) {
+                        WebView(
+                            url = selectedItem.route,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+
+                    composable(NavigationUtil.TOUCH_LAB.route) {
+                        WebView(
+                            url = selectedItem.route,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+
+                    composable(NavigationUtil.WHATSAPP.route) {
+                        WebView(
+                            url = selectedItem.route,
+                            modifier = Modifier.fillMaxSize()
+                        )
                     }
                 }
             }

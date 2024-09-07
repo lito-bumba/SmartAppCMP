@@ -9,11 +9,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 enum class NavigationUtil (
     val title: String,
     val icon: ImageVector,
-    val route: String,
-    val isWebView: Boolean = true
+    val route: String
 ) {
-    HOME("Home", Icons.Default.Home, "home", false),
+    HOME("Home", Icons.Default.Home, "home"),
     GOOGLE("Google", Icons.Default.Group, "https://google.com"),
-    TOUCHLAB("TouchLab", Icons.Default.Group, "https://touchlab.co"),
+    TOUCH_LAB("TouchLab", Icons.Default.Group, "https://touchlab.co"),
     WHATSAPP("WhatsApp", Icons.Default.AppsOutage, "https://web.whatsapp.com"),
 }

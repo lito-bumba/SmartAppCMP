@@ -5,8 +5,10 @@ import SwiftUI
 struct iOSApp: App {
     var body: some Scene {
         WindowGroup {
-            ComposeView()
-                .ignoresSafeArea(.keyboard)
+            VStack{
+                ComposeView()
+                    .ignoresSafeArea()
+            }
         }
     }
 }

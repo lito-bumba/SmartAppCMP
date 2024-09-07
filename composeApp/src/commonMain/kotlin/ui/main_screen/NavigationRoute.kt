@@ -6,7 +6,7 @@ import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.graphics.vector.ImageVector
 
-enum class NavigationUtil (
+enum class NavigationRoute (
     val title: String,
     val icon: ImageVector,
     val route: String

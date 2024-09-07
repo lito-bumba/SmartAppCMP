@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BrokenImage
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
@@ -43,7 +41,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -51,17 +48,14 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import smartapp.composeapp.generated.resources.Res
 import smartapp.composeapp.generated.resources.compose_multiplatform
-import ui.AppScreen
 import ui.components.native.WebView
 
 @Composable
-fun MainScreen(
-    navController: NavController
-) {
+fun MainScreen() {
     val scope = rememberCoroutineScope()
     val drawerNavController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    var selectedItem: NavigationUtil by remember { mutableStateOf(NavigationUtil.HOME) }
+    var selectedItem: NavigationRoute by remember { mutableStateOf(NavigationRoute.HOME) }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -86,7 +80,7 @@ fun MainScreen(
                         color = Color.Blue
                     )
                     Spacer(Modifier.height(8.dp))
-                    NavigationUtil.entries.toTypedArray().forEach { navItem ->
+                    NavigationRoute.entries.toTypedArray().forEach { navItem ->
                         NavigationDrawerItem(
                             icon = {
                                 Image(
@@ -137,9 +131,9 @@ fun MainScreen(
             ) {
                 NavHost(
                     navController = drawerNavController,
-                    startDestination = NavigationUtil.HOME.route
+                    startDestination = NavigationRoute.HOME.route
                 ) {
-                    composable(route = NavigationUtil.HOME.route) {
+                    composable(route = NavigationRoute.HOME.route) {
                         Column(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally
@@ -147,26 +141,8 @@ fun MainScreen(
                             var showContent by remember { mutableStateOf(false) }
 
                             Spacer(Modifier.height(16.dp))
-                            Button(onClick = {
-                                navController.navigate(AppScreen.WebView.name)
-                            }) {
-                                Text("WebView Screen")
-                            }
-                            Spacer(Modifier.height(16.dp))
                             Button(onClick = { showContent = !showContent }) {
                                 Text("Click me!")
-                            }
-                            IconButton(onClick = {
-                                scope.launch {
-                                    drawerState.apply {
-                                        if (isClosed) open() else close()
-                                    }
-                                }
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.BrokenImage,
-                                    contentDescription = null
-                                )
                             }
                             AnimatedVisibility(showContent) {
                                 val greeting = remember { Greeting().greet() }
@@ -181,21 +157,21 @@ fun MainScreen(
                         }
                     }
 
-                    composable(NavigationUtil.GOOGLE.route) {
+                    composable(NavigationRoute.GOOGLE.route) {
                         WebView(
                             url = selectedItem.route,
                             modifier = Modifier.fillMaxSize()
                         )
                     }
 
-                    composable(NavigationUtil.TOUCH_LAB.route) {
+                    composable(NavigationRoute.TOUCH_LAB.route) {
                         WebView(
                             url = selectedItem.route,
                             modifier = Modifier.fillMaxSize()
                         )
                     }
 
-                    composable(NavigationUtil.WHATSAPP.route) {
+                    composable(NavigationRoute.WHATSAPP.route) {
                         WebView(
                             url = selectedItem.route,
                             modifier = Modifier.fillMaxSize()

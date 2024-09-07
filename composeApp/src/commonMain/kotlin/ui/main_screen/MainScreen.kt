@@ -25,6 +25,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -84,13 +85,13 @@ fun MainScreen(
                         thickness = 3.dp,
                         color = Color.Blue
                     )
-
+                    Spacer(Modifier.height(8.dp))
                     NavigationUtil.entries.toTypedArray().forEach { navItem ->
                         NavigationDrawerItem(
                             icon = {
                                 Image(
                                     imageVector = navItem.icon,
-                                    contentDescription = navItem.title
+                                    contentDescription = navItem.title,
                                 )
                             },
                             label = {
@@ -105,7 +106,13 @@ fun MainScreen(
                                 selectedItem = navItem
                                 scope.launch { drawerState.close() }
                                 drawerNavController.navigate(navItem.route)
-                            }
+                            },
+                            shape = MaterialTheme.shapes.small,
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = Color.Blue.copy(alpha = .1f),
+                                selectedTextColor = Color.Transparent
+                            ),
+                            modifier = Modifier.padding(horizontal = 8.dp)
                         )
                     }
                 }
@@ -210,7 +217,6 @@ private fun MainScreenTopBar(
             Text(
                 text = "SmartApp",
                 fontWeight = FontWeight.SemiBold,
-                style = MaterialTheme.typography.titleLarge,
                 color = Color.White
             )
         },
@@ -220,7 +226,7 @@ private fun MainScreenTopBar(
                     imageVector = Icons.Default.Menu,
                     contentDescription = "Menu Icon",
                     tint = Color.White,
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier
                 )
             }
         },
